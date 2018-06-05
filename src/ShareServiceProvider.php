@@ -12,7 +12,8 @@ class ShareServiceProvider extends ServiceProvider{
 	 */
 	public function register()
 	{
-	
+		// Register service
+		$this->app->bind('share', '\Peyman3d\Share\Share');
 	}
 	
 	/**
@@ -22,7 +23,8 @@ class ShareServiceProvider extends ServiceProvider{
 	 */
 	public function boot()
 	{
-	
+		// Load helpers
+		require_once('helpers.php');
 	}
 
 }

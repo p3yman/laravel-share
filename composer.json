@@ -1,20 +1,28 @@
 {
-    "name": "peyman3d/laravel-share",
-    "description": "Laravel shared data package",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Peyman Eskandari",
-            "email": "peyman.eskandari@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {},
-    "extra": {
-      "laravel": {
-        "providers": [
-          "Peyman3d\\Share\\ShareServiceProvider"
-        ]
+  "name": "peyman3d/laravel-share",
+  "description": "Laravel shared data package",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Peyman Eskandari",
+      "email": "peyman.eskandari@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Peyman3d\\Share\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Peyman3d\\Share\\ShareServiceProvider"
+      ],
+      "aliases": {
+        "Share": "Peyman3d\\Share\\ShareFacade"
       }
     }
+  }
 }
