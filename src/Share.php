@@ -14,11 +14,54 @@ class Share {
 	 */
 	public $key = '';
 	
+	/*
+	 * Arg types for simpler manage data
+	 */
+	protected $args_types   = [
+		'id', 'title', 'subtitle', 'label', 'icon',
+		'link', 'route', 'route_attributes', 'href', 'fallback', 'callback',
+		'order', 'class', 'desc', 'type',
+		'default', 'options', 'name', 'placeholder', 'children', 'file', 'config', 'column', 'col',
+		'active', 'format', 'permission', 'count', 'attributes', 'head_bar', 'field', 'blade', 'format'
+	];
+	
+	/*
+	 * Key types for simpler manage data
+	 */
+	protected $keys_types   = [
+		'menu', 'view', 'asset', 'js', 'css', 'script', 'style', 'blade',
+	];
+	
 	/**
 	 * Share constructor.
 	 */
 	public function __construct() {
 	
+	}
+	
+	/**
+	 * Filter call method
+	 *
+	 * @param $method
+	 * @param $arguments
+	 *
+	 * @return $this
+	 */
+	public function __call($method, $arguments)
+	{
+		if(true === in_array($method, $this->args_types)) {
+			
+			$this->edit($method, $arguments[0]);
+			
+			return $this;
+			
+		} elseif(true === in_array($method, $this->keys_types)) {
+			
+			$this->key = array_first($arguments) ? "$method.$arguments[0]" : $method;
+			
+			return $this;
+			
+		}
 	}
 	
 	/**
@@ -71,6 +114,19 @@ class Share {
 	}
 	
 	/**
+	 * Make item in key
+	 *
+	 * @param $key
+	 *
+	 * @return mixed
+	 */
+	public function item($key){
+	
+		return $this->make($key);
+		
+	}
+	
+	/**
 	 * Prepend value to array with key
 	 *
 	 * @param $key
@@ -97,7 +153,7 @@ class Share {
 	 */
 	public function child($id, $child_key = 'children'){
 		
-		return $this->add("$child_key.$id");
+		return $this->item("$child_key.$id");
 		
 	}
 	
