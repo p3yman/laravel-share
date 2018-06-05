@@ -34,3 +34,40 @@ As you see you can create an item with `make()` method. then you can add paramet
 share()->make('asset.js')->add('react', 'https://cdnjs.cloudflare.com/ajax/libs/react/16.4.0/umd/react.production.min.js')
 ```
 
+There are some basic methods for working with data array:
+```php
+// Change key
+share()->key('menu');
+
+// Make new item with key and value
+share()->make($key, $value, $single);
+
+// Create new item to current key
+share()->make('menu')->item('dashboard');
+
+// Prepend an item to current key
+share()->make('menu')->prepend('posts');
+
+// Add a child to array
+share()->make('menu')->item('users')->child('users-list');
+
+// Check if key exists
+share()->key('menu')->has('dashboard');
+
+// Get from array with key
+// Second parameter is for get result as single value or collection
+share()->key('menu')->get('users', true);
+
+// Pull data from array and delete it
+share()->key('menu')->pull('users', true);
+
+// Get all data
+share()->all();
+
+// Delete data for current key
+share()->key('menu.users')->delete();
+
+// Delete all data
+share()->reset();
+
+```
