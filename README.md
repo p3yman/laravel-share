@@ -71,3 +71,66 @@ share()->key('menu.users')->delete();
 share()->reset();
 
 ```
+
+## Even better helpers
+Laravel Share has more helpers to create better syntax. You can use any combination of these helpers.
+```php
+share()->make('Job')->title('Senior Developer');
+```
+As you can see `title()` method accept a value and work just like `add('title', 'Senior Developer')`.
+
+Check all helpers here:
+- `id()`
+- `title()`
+- `subtitle()`
+- `label()`
+- `icon()`
+- `link()`
+- `route()`
+- `route_attributes()`
+- `href()`
+- `fallback()`
+- `callback()`
+- `order()`
+- `class()`
+- `desc()`
+- `type()`
+- `default()`
+- `options()`
+- `name()`
+- `placeholder()`
+- `children()`
+- `file()`
+- `src()`
+- `active()`
+- `config()`
+- `format()`
+- `permission()`
+- `count()`
+- `attributes()`
+- `field()`
+- `blade()`
+
+Other than this helpers for parameters, we also have some helpers for sections and types:
+
+- `menu()` 
+- `view()` 
+- `asset()` 
+- `js()` 
+- `css()` 
+- `script()` 
+- `style()` 
+
+You can check some examples:
+```php
+// Create new menu with items
+share()->menu()->item('dashboard')->label('Dashboard')->href('/admin/');
+share()->menu()->item('users')->label('Users')->route('admin.users');
+share()->menu('users')->child('users-profile')->label('Profile')->route('admin.users.profile');
+share()->menu('users')->child('users-list')->label('All users')->route('admin.users.index');
+share()->menu('users')->child('users-create')->label('Add new user')->route('admin.users.create');
+
+// Manage Assets
+share()->js('jquery')->link('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')->order(500);
+share()->js('react')->link('https://cdnjs.cloudflare.com/ajax/libs/react/16.4.0/umd/react.production.min.js')->order(300);
+```

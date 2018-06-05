@@ -21,15 +21,15 @@ class Share {
 		'id', 'title', 'subtitle', 'label', 'icon',
 		'link', 'route', 'route_attributes', 'href', 'fallback', 'callback',
 		'order', 'class', 'desc', 'type',
-		'default', 'options', 'name', 'placeholder', 'children', 'file', 'config', 'column', 'col',
-		'active', 'format', 'permission', 'count', 'attributes', 'head_bar', 'field', 'blade', 'format'
+		'default', 'options', 'name', 'placeholder', 'children', 'file', 'src', 'config',
+		'active', 'format', 'permission', 'count', 'attributes', 'field', 'blade',
 	];
 	
 	/*
 	 * Key types for simpler manage data
 	 */
 	protected $keys_types   = [
-		'menu', 'view', 'asset', 'js', 'css', 'script', 'style', 'blade',
+		'menu', 'view', 'asset', 'js', 'css', 'script', 'style',
 	];
 	
 	/**
