@@ -37,5 +37,5 @@ function shared_data_sort($items){
  * @return mixed
  */
 function shared_data_compare_order($a, $b){
-	return array_get($a, 'order', 20) - array_get($b, 'order', 20);
+	return array_get($a, 'order', 100) - array_get($b, 'order', 100);
 }

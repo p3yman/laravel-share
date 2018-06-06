@@ -29,6 +29,8 @@ Share::make('Person')
 	   ->add('job', 'Web developer')
 	   ->edit('title', 'Mr');
 ```
+And when you want that data just use `Share::get('Person');`;
+
 As you see you can create an item with `make()` method. then you can add parameters to it by using `add($key, $value)` or `edit($key, $value)`. You can also use `share()` helper instead of `Share` Facade.
 ```php
 share()->make('asset.js')->add('react', 'https://cdnjs.cloudflare.com/ajax/libs/react/16.4.0/umd/react.production.min.js')
@@ -134,3 +136,93 @@ share()->menu('users')->child('users-create')->label('Add new user')->route('adm
 share()->js('jquery')->link('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')->order(500);
 share()->js('react')->link('https://cdnjs.cloudflare.com/ajax/libs/react/16.4.0/umd/react.production.min.js')->order(300);
 ```
+
+## Just an example
+Imagine you have an admin panel that has a menu on sidebar. This menu has multiple items and each one may have sub-items.
+Now, we add some items to the menu:
+```php
+// Add dashboard
+share()->menu()->item('dashboard')->label('Dashboard')->icon('fa fa-dashboard')->route('admin.dashboard');
+
+// Add posts and it's sub items
+share()->menu()->item('posts')->label('Posts')
+               ->icon('fa fa-file-text-o')->route('admin.posts');
+share()->menu('posts')->child('posts-list')->label('All posts')
+                      ->route('admin.posts.index');
+share()->menu('posts')->child('posts-create')->label('Add new post')
+                      ->route('admin.posts.create');
+
+// Add setting
+share()->menu()->item('settings')->label('Settings')->icon('fa fa-cogs');
+foreach($setting_pages as $page){
+    share()->menu('settings')->child('setting-page-'.$page['id'])->label($page['label'])
+                          ->route('admin.settings')
+                          ->route_attributes(['slug'=>$page['slug']]);
+}
+```
+These codes can be anywhere: Service Provider, routes, middlewares, controller, model and even a blade view.
+If you want you can active a menu item like this:
+```php
+// PostController.php
+
+public function index(){
+    share()->key('menu.posts')->activate();
+    share()->key('menu.posts.children.posts-list')->activate();
+}
+```
+And you can sort items with `order()` method. It can be done when you add an item or just any other times and places.
+```php
+// AdminMiddleware.php
+
+class AdminMiddleware
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        share()->key('menu.posts')->order(100);
+    
+	    return $next($request);
+    }
+}
+```
+If you don't set order, it counts as 100.
+
+And finally you can use this data in a blade view like `sidebar.blade.php` as simple as this:
+```blade
+<aside id="sidebar">
+
+    <ul class="menu">
+    
+        @foreach( share()->menu()->get() as $item )
+        
+            <li class="menu-item @if( array_has($item, 'children') ) has-child @endif @if(array_get($menu_item, 'active', false)) active @endif">
+            
+                <a href="{{ make_menu_link($item) }}">
+                    <i class="{{ array_get($item, 'icon') }}"></i>
+                    <span class="title">{{ array_get($item, 'label') }}</span>
+                </a>
+
+                @if( array_has($item, 'children') )
+                    <ul class="sub-menu" @if(array_get($menu_item, 'active', false)) style="display: block;" @endif>
+                        @foreach( $item['children'] as $subitem )
+                            <li><a href="{{ make_menu_link($subitem) }}">{{ $subitem['label'] }}</a></li>
+                        @endforeach
+                    </ul>
+                @endif
+
+            </li>
+        
+        @endforeach
+    
+    </ul>
+
+</aside>
+```
+And that's just it :)
+Just one thing. I use a helper function called `make_menu_link()` that I wrote for create item link base on what it has. It's not on the package as it may not be useful for you. But you can have it in this [link](https://gist.github.com/peyman3d/97941c94d4b877b4a76075fbc3dce122).
