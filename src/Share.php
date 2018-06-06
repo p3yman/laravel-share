@@ -294,4 +294,29 @@ class Share {
 		return collect($items);
 		
 	}
+	
+	/*-----------------------------------------------------------------
+	- Helpers
+	-----------------------------------------------------------------*/
+	/**
+	 * Make active key true
+	 *
+	 * @return mixed
+	 */
+	public function activate(){
+		
+		return $this->add('active', true);
+	
+	}
+	
+	/**
+	 * Make active key false
+	 *
+	 * @return mixed
+	 */
+	public function deactivate(){
+		
+		return $this->add('active', false);
+		
+	}
 }
