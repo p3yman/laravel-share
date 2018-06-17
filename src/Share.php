@@ -122,7 +122,7 @@ class Share {
 	 */
 	public function item($key){
 	
-		return $this->make($key);
+		return $this->key("$this->key.$key");
 		
 	}
 	
