@@ -172,7 +172,7 @@ class Share {
 	}
 	
 	/**
-	 * Edit data array. Alias for add
+	 * Edit data array. Arg for add
 	 *
 	 * @param $key
 	 * @param $value
@@ -317,6 +317,156 @@ class Share {
 	public function deactivate(){
 		
 		return $this->add('active', false);
+		
+	}
+	
+	/*-----------------------------------------------------------------
+	- Arg helpers
+	-----------------------------------------------------------------*/
+	/**
+	 * Add arg
+	 *
+	 * @param $arg
+	 *
+	 * @return $this
+	 */
+	public function addArg($arg){
+		
+		$this->args_types[] = $arg;
+		
+		return $this;
+	
+	}
+	
+	/**
+	 * Delete arg
+	 *
+	 * @param $arg
+	 *
+	 * @return $this
+	 */
+	public function deleteArg($arg){
+		
+		array_splice($this->args_types, array_search($arg, $this->args_types ), 1);
+		
+		return $this;
+		
+	}
+	
+	/**
+	 * Edit arg
+	 *
+	 * @param $old_arg
+	 * @param $new_arg
+	 *
+	 * @return $this
+	 */
+	public function editArg($old_arg, $new_arg){
+		
+		$this->deleteArg($old_arg);
+		
+		$this->addArg($new_arg);
+		
+		return $this;
+		
+	}
+	
+	/**
+	 * Edit arg
+	 *
+	 * @param $arg
+	 *
+	 * @return $this
+	 */
+	public function hasArg($arg){
+		
+		return in_array($arg, $this->args_types);
+		
+	}
+	
+	/**
+	 * Get available args
+	 *
+	 * @return array
+	 */
+	public function getArgs(){
+		
+		return $this->args_types;
+		
+	}
+	
+	/*-----------------------------------------------------------------
+	- Key helpers
+	-----------------------------------------------------------------*/
+	/**
+	 * Add key
+	 *
+	 * @param $key
+	 *
+	 * @return $this
+	 */
+	public function addKey($key){
+		
+		$this->keys_types[] = $key;
+		
+		return $this;
+		
+	}
+	
+	/**
+	 * Delete key
+	 *
+	 * @param $key
+	 *
+	 * @return $this
+	 */
+	public function deleteKey($key){
+		
+		array_splice($this->keys_types, array_search($key, $this->keys_types ), 1);
+		
+		return $this;
+		
+	}
+	
+	/**
+	 * Edit arg
+	 *
+	 * @param $old_key
+	 * @param $new_key
+	 *
+	 * @return $this
+	 */
+	public function editKey($old_key, $new_key){
+		
+		$this->deleteKey($old_key);
+		
+		$this->addKey($new_key);
+		
+		return $this;
+		
+	}
+	
+	/**
+	 * Edit key
+	 *
+	 * @param $key
+	 *
+	 * @return $this
+	 */
+	public function hasKey($key){
+		
+		return in_array($key, $this->keys_types);
+		
+	}
+	
+	/**
+	 * Get available keys
+	 *
+	 * @return array
+	 */
+	public function getKeys(){
+		
+		return $this->keys_types;
 		
 	}
 }
