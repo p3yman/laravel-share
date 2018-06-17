@@ -74,6 +74,15 @@ share()->reset();
 
 ```
 
+## What data can be shared?
+Almost anything. You can share any string, numbers, objects and closures.
+```php
+share()->make('user')->add('profile', auth()->user());
+share()->menu('posts')->add('filter', function($value){
+    return '<h3>'.$value.'</h3>';   
+});
+```
+
 ## Even better helpers
 Laravel Share has more helpers to create better syntax. You can use any combination of these helpers.
 ```php
@@ -136,6 +145,27 @@ share()->menu('users')->child('users-create')->label('Add new user')->route('adm
 share()->js('jquery')->link('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')->order(500);
 share()->js('react')->link('https://cdnjs.cloudflare.com/ajax/libs/react/16.4.0/umd/react.production.min.js')->order(300);
 ```
+
+### Custom helpers
+I added some basic helpers that works for me, but you can also add yours. You can remove or edit items too. See some examples below:
+```php
+// Arguments
+share()->addArg('avatar');
+share()->removeArg('icon');
+share()->editArg('subtitle', 'second-title');
+if( share()->hasArg('config') ){
+    share()->editArg('config', 'setting');
+}
+
+// Keys
+share()->addKey('table');
+share()->removeKey('view');
+share()->editKey('asset', 'libraries');
+if( share()->hasKey('menu') ){
+    share()->editKey('menu', 'menus');
+}
+```
+
 
 ## Just an example
 Imagine you have an admin panel that has a menu on sidebar. This menu has multiple items and each one may have sub-items.
